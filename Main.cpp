@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
 
     device = pcap_lookupdev(error_buffer);
     if (device == NULL) {
-        printf("Error finding device: %s\n", error_buffer);
+        std::cout << "Error finding device " << error_buffer << std::endl;
         return 1;
     }
 
@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
       and the timeout is reached, it will return NULL */
      packet = pcap_next(handle, &packet_header);
      if (packet == NULL) {
-        printf("No packet found.\n");
+        std::cout << "No packet found" << std::endl;
         return 2;
     }
 
@@ -46,6 +46,9 @@ int main(int argc, char **argv) {
 }
 
 void print_packet_info(const u_char *packet, struct pcap_pkthdr packet_header) {
-    printf("Packet capture length: %d\n", packet_header.caplen);
-    printf("Packet total length %d\n", packet_header.len);
+    if(packet != NULL)
+    {
+        std::cout << "Packet capture length:" <<  packet_header.caplen << std::endl;
+        std::cout << "Packet total length:" <<  packet_header.len << std::endl;
+    }
 }
