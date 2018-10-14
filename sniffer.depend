@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1539542315 source:/home/cristi/Desktop/packet_sniffer/Main.cpp
+	<iostream>
+	<pcap.h>
+	"Packet.h"
+	<time.h>
+	<netinet/in.h>
+	<netinet/if_ether.h>
+
+1539542031 /home/cristi/Desktop/packet_sniffer/Packet.h
+
+1539540763 source:/home/cristi/Desktop/packet_sniffer/Packet.cpp
+	"Packet.h"
+
