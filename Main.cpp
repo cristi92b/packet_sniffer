@@ -7,7 +7,12 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 
-//void print_packet_info(const u_char *packet, struct pcap_pkthdr packet_header);
+void my_packet_handler(
+    u_char *args,
+    const struct pcap_pkthdr *header,
+    const u_char *packet
+);
+void print_packet_info(const u_char *packet, struct pcap_pkthdr packet_header);
 
 int main(int argc, char **argv) {
 
@@ -29,7 +34,24 @@ int main(int argc, char **argv) {
     bpf_u_int32 subnet_mask_raw; /* Subnet mask as integer */
     int lookup_return_code;
     struct in_addr address; /* Used for both ip & subnet */
+    int timeout_limit = 10000;
 
+    pcap_t *handle;
+
+    handle = pcap_open_live(
+            device,
+            BUFSIZ,
+            0,
+            timeout_limit,
+            error_buffer
+        );
+    if (handle == NULL) {
+         printf("Could not open device %s: %s\n", device, error_buffer);
+         return 2;
+     }
+
+    pcap_loop(handle, 0, my_packet_handler, NULL);
+    /*
     lookup_return_code = pcap_lookupnet(
         device,
         &ip_raw,
@@ -44,7 +66,7 @@ int main(int argc, char **argv) {
     address.s_addr = ip_raw;
     ipAddr = inet_ntoa(address);
     if (ipAddr.empty()) {
-        printf("inet_ntoa"); /* print error */
+        printf("inet_ntoa");
         return 1;
     }
     else
@@ -53,6 +75,7 @@ int main(int argc, char **argv) {
     }
 
     return 0;
+*/
 
 /*
     char *device;
@@ -88,6 +111,23 @@ int main(int argc, char **argv) {
     //print_packet_info(packet, packet_header);
 
 }
+
+
+void my_packet_handler(
+    u_char *args,
+    const struct pcap_pkthdr *packet_header,
+    const u_char *packet_body
+)
+{
+    print_packet_info(packet_body, *packet_header);
+    return;
+}
+
+void print_packet_info(const u_char *packet, struct pcap_pkthdr packet_header) {
+    printf("Packet capture length: %d\n", packet_header.caplen);
+    printf("Packet total length %d\n", packet_header.len);
+}
+
 /*
 void print_packet_info(const u_char *packet, struct pcap_pkthdr packet_header) {
     if(packet != NULL)
