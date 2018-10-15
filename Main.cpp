@@ -16,10 +16,18 @@ void print_packet_info(const u_char *packet, struct pcap_pkthdr packet_header);
 
 int main(int argc, char **argv) {
 
-    char *device; /* Name of device (e.g. eth0, wlan0) */
-    char error_buffer[PCAP_ERRBUF_SIZE]; /* Size defined in pcap.h */
+    Packet packetSniffer;
+    packetSniffer.StartListening();
 
-    /* Find a device */
+    std::cout << "Press enter to continue ...";
+    std::cin.get();
+
+    return 0;
+    /*
+
+    char *device;
+    char error_buffer[PCAP_ERRBUF_SIZE];
+
     device = pcap_lookupdev(error_buffer);
     if (device == NULL) {
         printf("Error finding device: %s\n", error_buffer);
@@ -30,10 +38,10 @@ int main(int argc, char **argv) {
     //char ip[13];
     std::string ipAddr;
     char subnet_mask[13];
-    bpf_u_int32 ip_raw; /* IP address as integer */
-    bpf_u_int32 subnet_mask_raw; /* Subnet mask as integer */
+    bpf_u_int32 ip_raw;
+    bpf_u_int32 subnet_mask_raw;
     int lookup_return_code;
-    struct in_addr address; /* Used for both ip & subnet */
+    struct in_addr address;
     int timeout_limit = 10000;
 
     pcap_t *handle;
@@ -51,6 +59,7 @@ int main(int argc, char **argv) {
      }
 
     pcap_loop(handle, 0, my_packet_handler, NULL);
+    */
     /*
     lookup_return_code = pcap_lookupnet(
         device,
