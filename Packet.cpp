@@ -24,6 +24,11 @@ Packet::Packet()
         throw std::runtime_error(std::string("Could not open device: ") + error_buffer);
     }
     fOutputStream.open("output.csv");
+    if(!fOutputStream.is_open())
+    {
+        std::cout << "Could not open file for writing: output.cs" << std::endl;
+        throw std::runtime_error(std::string("Could not open file for writing: output.cs"));
+    }
 }
 
 Packet::~Packet()
