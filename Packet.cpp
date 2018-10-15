@@ -38,6 +38,7 @@ void Packet::StartListening()
 
 void Packet::PacketHandler(u_char *args, const struct pcap_pkthdr *header, const u_char *packet)
 {
+    //TODO: parse relevant data from packet, like source and destination IP addresses
     WritePacket(packet, *header);
 }
 

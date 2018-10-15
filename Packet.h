@@ -16,7 +16,8 @@ class Packet{
         Packet();
         virtual ~Packet();
         void StartListening();
-        static std::ofstream fOutputStream;
+        static std::ofstream fOutputStream; //TODO: Create interface for output stream
+        //Note: fOutputStream is static because the packet handler function must be a static method and we cannot change the signature of PacketHandler() so that we can pass the stream as parameter
     private:
         pcap_t *fHandle;
         std::string fDevice;
